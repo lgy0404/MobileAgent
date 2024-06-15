@@ -25,14 +25,14 @@ import concurrent
 adb_path = 'adb'
 
 # Your instruction
-instruction = "打开相机"
+instruction = "帮我查找youtube上关于appagent的视频，找到播放量第二的并进行播放"
 
 api_key = os.environ.get('OPENAI_API_KEY')
-base_url = os.environ.get('OPENAI_BASE_URL')
+# base_url = os.environ.get('OPENAI_BASE_URL')
 
 # Your GPT-4o API URL
 # API_url = ""
-API_url = base_url
+API_url = 'https://api.chatanywhere.tech/v1/chat/completions'
 
 # Your GPT-4o API Token
 # token = ""
