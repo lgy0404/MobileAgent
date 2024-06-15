@@ -22,16 +22,21 @@ import concurrent
 
 ####################################### Edit your Setting #########################################
 # Your ADB path
-adb_path = ""
+adb_path = 'adb'
 
 # Your instruction
-instruction = ""
+instruction = "打开相机"
+
+api_key = os.environ.get('OPENAI_API_KEY')
+base_url = os.environ.get('OPENAI_BASE_URL')
 
 # Your GPT-4o API URL
-API_url = ""
+# API_url = ""
+API_url = base_url
 
 # Your GPT-4o API Token
-token = ""
+# token = ""
+token = api_key
 
 # Choose between "api" and "local". api: use the qwen api. local: use the local qwen checkpoint
 caption_call_method = "api"
@@ -40,7 +45,7 @@ caption_call_method = "api"
 caption_model = "qwen-vl-plus"
 
 # If you choose the api caption call method, input your Qwen api here
-qwen_api = ""
+qwen_api = "sk-dc673698de1c41bebebae482aa5fd290"
 
 # You can add operational knowledge to help Agent operate more accurately.
 add_info = "If you want to tap an icon of an app, use the action \"Open app\". If you want to exit an app, use the action \"Home\""
