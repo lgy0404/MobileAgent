@@ -25,7 +25,7 @@ import concurrent
 adb_path = 'adb'
 
 # Your instruction
-instruction = "定一个明天早上八点二十的闹钟"
+instruction = "Open the calculator and perform 2^13"
 
 api_key = os.environ.get('OPENAI_API_KEY')
 # base_url = os.environ.get('OPENAI_BASE_URL')
@@ -182,33 +182,33 @@ def get_perception_infos(adb_path, screenshot_file):
     width, height = Image.open(screenshot_file).size
     
     text, coordinates = ocr(screenshot_file, ocr_detection, ocr_recognition)
-    text, coordinates = merge_text_blocks(text, coordinates)
+    text, coordinates = merge_text_blocks(text, coordinates) # 拿到text + bound对
     
-    center_list = [[(coordinate[0]+coordinate[2])/2, (coordinate[1]+coordinate[3])/2] for coordinate in coordinates]
-    draw_coordinates_on_image(screenshot_file, center_list)
+    center_list = [[(coordinate[0]+coordinate[2])/2, (coordinate[1]+coordinate[3])/2] for coordinate in coordinates] # 计算bound中点
+    draw_coordinates_on_image(screenshot_file, center_list) # 在scr上标注text中点位置
     
     perception_infos = []
     for i in range(len(coordinates)):
         perception_info = {"text": "text: " + text[i], "coordinates": coordinates[i]}
-        perception_infos.append(perception_info)
+        perception_infos.append(perception_info) # 把OCR感知信息以键值对的形式存储在perception_infos
         
-    coordinates = det(screenshot_file, "icon", groundingdino_model)
+    coordinates = det(screenshot_file, "icon", groundingdino_model) # 检测icon的bound
     
     for i in range(len(coordinates)):
         perception_info = {"text": "icon", "coordinates": coordinates[i]}
-        perception_infos.append(perception_info)
+        perception_infos.append(perception_info) # 把ICON坐标信息存储在perception_infos
         
-    image_box = []
-    image_id = []
+    image_box = [] # 记录ICON坐标信息
+    image_id = [] # 记录ICON在perception_infos中的随你
     for i in range(len(perception_infos)):
         if perception_infos[i]['text'] == 'icon':
             image_box.append(perception_infos[i]['coordinates'])
             image_id.append(i)
 
     for i in range(len(image_box)):
-        crop(screenshot_file, image_box[i], image_id[i])
+        crop(screenshot_file, image_box[i], image_id[i]) # 根据image_box和image_id裁切src，存储在temp文件夹中
 
-    images = get_all_files_in_folder(temp_file)
+    images = get_all_files_in_folder(temp_file)  # 读取裁切出来的ICON文件
     if len(images) > 0:
         images = sorted(images, key=lambda x: int(x.split('/')[-1].split('.')[0]))
         image_id = [int(image.split('/')[-1].split('.')[0]) for image in images]
