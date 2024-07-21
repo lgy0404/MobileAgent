@@ -35,7 +35,7 @@ def take_screenshots(adb_path, num_screenshots, output_folder, crop_y_start, cro
         subprocess.run([adb_path, 'shell', 'input', 'swipe', '500', str(slide_y_start), '500', str(slide_y_end)])
 
 
-def get_screenshot(adb_path):
+def get_screenshot(adb_path, iter):
     command = adb_path + " shell rm /sdcard/screenshot.png"
     subprocess.run(command, capture_output=True, text=True, shell=True)
     time.sleep(0.5)
@@ -46,8 +46,10 @@ def get_screenshot(adb_path):
     subprocess.run(command, capture_output=True, text=True, shell=True)
     image_path = "./screenshot/screenshot.png"
     save_path = "./screenshot/screenshot.jpg"
+    log_path = f"./log/{iter}.jpg"
     image = Image.open(image_path)
     image.convert("RGB").save(save_path, "JPEG")
+    image.convert("RGB").save(log_path, "JPEG")
     os.remove(image_path)
 
 

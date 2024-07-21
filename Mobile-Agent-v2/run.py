@@ -176,8 +176,8 @@ def merge_text_blocks(text_list, coordinates_list):
     return merged_text_blocks, merged_coordinates
 
 
-def get_perception_infos(adb_path, screenshot_file):
-    get_screenshot(adb_path)
+def get_perception_infos(adb_path, screenshot_file, iter):
+    get_screenshot(adb_path, iter)
     
     width, height = Image.open(screenshot_file).size
     
@@ -288,7 +288,7 @@ while True:
     iter += 1
     if iter == 1:
         screenshot_file = "./screenshot/screenshot.jpg"
-        perception_infos, width, height = get_perception_infos(adb_path, screenshot_file)
+        perception_infos, width, height = get_perception_infos(adb_path, screenshot_file, iter)
         shutil.rmtree(temp_file)
         os.mkdir(temp_file)
         
@@ -374,7 +374,7 @@ while True:
         os.remove(last_screenshot_file)
     os.rename(screenshot_file, last_screenshot_file)
     
-    perception_infos, width, height = get_perception_infos(adb_path, screenshot_file)
+    perception_infos, width, height = get_perception_infos(adb_path, screenshot_file, iter)
     shutil.rmtree(temp_file)
     os.mkdir(temp_file)
     
