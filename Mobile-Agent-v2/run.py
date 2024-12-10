@@ -305,7 +305,7 @@ while True:
     chat_action = init_action_chat()
     chat_action = add_response("user", prompt_action, chat_action, screenshot_file)
 
-    output_action = inference_chat(chat_action, 'gpt-4o-mini', API_url, token)
+    output_action = inference_chat(chat_action, 'gpt-4o', API_url, token)
     thought = output_action.split("### Thought ###")[-1].split("### Action ###")[0].replace("\n", " ").replace(":", "").replace("  ", " ").strip()
     summary = output_action.split("### Operation ###")[-1].replace("\n", " ").replace("  ", " ").strip()
     action = output_action.split("### Action ###")[-1].split("### Operation ###")[0].replace("\n", " ").replace("  ", " ").strip()
@@ -318,7 +318,7 @@ while True:
     if memory_switch:
         prompt_memory = get_memory_prompt(insight)
         chat_action = add_response("user", prompt_memory, chat_action)
-        output_memory = inference_chat(chat_action, 'gpt-4o-mini', API_url, token)
+        output_memory = inference_chat(chat_action, 'gpt-4o', API_url, token)
         chat_action = add_response("assistant", output_memory, chat_action)
         status = "#" * 50 + " Memory " + "#" * 50
         print(status)
@@ -391,7 +391,7 @@ while True:
         chat_reflect = init_reflect_chat()
         chat_reflect = add_response_two_image("user", prompt_reflect, chat_reflect, [last_screenshot_file, screenshot_file])
 
-        output_reflect = inference_chat(chat_reflect, 'gpt-4o-mini', API_url, token)
+        output_reflect = inference_chat(chat_reflect, 'gpt-4o', API_url, token)
         reflect = output_reflect.split("### Answer ###")[-1].replace("\n", " ").strip()
         chat_reflect = add_response("assistant", output_reflect, chat_reflect)
         status = "#" * 50 + " Reflcetion " + "#" * 50
@@ -407,7 +407,7 @@ while True:
             prompt_planning = get_process_prompt(instruction, thought_history, summary_history, action_history, completed_requirements, add_info)
             chat_planning = init_memory_chat()
             chat_planning = add_response("user", prompt_planning, chat_planning)
-            output_planning = inference_chat(chat_planning, 'gpt-4o-mini', API_url, token)
+            output_planning = inference_chat(chat_planning, 'gpt-4o', API_url, token)
             chat_planning = add_response("assistant", output_planning, chat_planning)
             status = "#" * 50 + " Planning " + "#" * 50
             print(status)
@@ -432,7 +432,7 @@ while True:
         prompt_planning = get_process_prompt(instruction, thought_history, summary_history, action_history, completed_requirements, add_info)
         chat_planning = init_memory_chat()
         chat_planning = add_response("user", prompt_planning, chat_planning)
-        output_planning = inference_chat(chat_planning, 'gpt-4o-mini', API_url, token)
+        output_planning = inference_chat(chat_planning, 'gpt-4o', API_url, token)
         chat_planning = add_response("assistant", output_planning, chat_planning)
         status = "#" * 50 + " Planning " + "#" * 50
         print(status)
